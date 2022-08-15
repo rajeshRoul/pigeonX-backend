@@ -34,6 +34,7 @@ passport.deserializeUser((id, done) => {
       return done(err);
     }
     const data = {
+      id: user._id,
       email: user.email,
       full_name: user.full_name,
     };
