@@ -2,7 +2,6 @@ const User = require("../models/user");
 const passport = require("passport");
 
 module.exports.profile = (req, res) => {
-  console.log(req);
   res.send({ data: req.user });
 };
 
@@ -56,4 +55,19 @@ module.exports.login = (req, res, next) => {
       });
     }
   })(req, res, next);
+};
+
+module.exports.logout = (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      console.log("Error in logout :: ", err);
+      return;
+    }
+    res.send({
+      success: true,
+      data: {
+        msg: "User Logged Out",
+      },
+    });
+  });
 };

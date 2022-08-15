@@ -8,6 +8,7 @@ const port = 8000;
 const session = require("express-session");
 const passport = require("passport");
 const passportLocal = require("./config/passport/passport-local-strategy");
+const MongoStore = require("connect-mongo");
 
 app.use(
   cors({
@@ -29,6 +30,16 @@ app.use(
     cookie: {
       maxAge: 1000 * 60 * 100,
     },
+    store: MongoStore.create(
+      {
+        clientPromise: Promise.resolve(db.getClient()),
+        // collectionName: 'sessions'
+        autoRemove: "disabled",
+      },
+      (err) => {
+        console.log(err || "Connect Mongo DB is Running");
+      }
+    ),
   })
 );
 
