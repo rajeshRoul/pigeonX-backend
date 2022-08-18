@@ -22,6 +22,12 @@ module.exports.create = (req, res) => {
 module.exports.getAll = (req, res) => {
   Post.find({ user: req.user.id })
     .populate("user")
+    .populate({
+      path: "comments",
+      populate: {
+        path: "user",
+      },
+    })
     .exec((err, posts) => {
       if (err) {
         return res.send({

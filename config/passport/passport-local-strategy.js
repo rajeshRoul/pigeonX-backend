@@ -46,7 +46,7 @@ passport.checkAuthentication = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   }
-  return res.status(403).send({ success: false, msg: "User is Unauthorized" });
+  return res.status(401).send({ success: false, msg: "User is Unauthorized" });
 };
 
 module.exports = passport;
