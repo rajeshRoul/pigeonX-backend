@@ -71,3 +71,22 @@ module.exports.logout = (req, res) => {
     });
   });
 };
+
+module.exports.getAllUsers = (req, res) => {
+  User.find(
+    { _id: { $nin: [req.user._id] } },
+    {
+      password: 0,
+    },
+    (err, users) => {
+      if (err) {
+        console.log("Failed to get Users :", err);
+
+        return res
+          .status(500)
+          .send({ success: false, msg: "Failed to get Users" });
+      }
+      return res.send({ success: true, data: users });
+    }
+  );
+};

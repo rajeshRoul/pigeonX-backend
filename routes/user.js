@@ -11,4 +11,6 @@ router.post("/login", UserController.login);
 
 router.post("/logout", UserController.logout);
 
+router.get("/getAll", passport.checkAuthentication, UserController.getAllUsers);
+
 module.exports = router;
