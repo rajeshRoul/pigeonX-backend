@@ -2,7 +2,15 @@ const User = require("../models/user");
 const passport = require("passport");
 
 module.exports.profile = (req, res) => {
-  res.send({ data: req.user });
+  User.findById(req.params.id, { password: 0 }, (err, user) => {
+    if (err) {
+      console.log("Failed to find user : ", err);
+      return res
+        .status(400)
+        .send({ success: false, msg: "Failed to get User" });
+    }
+    return res.send({ success: true, data: user });
+  });
 };
 
 module.exports.create = (req, res) => {
@@ -48,6 +56,7 @@ module.exports.login = (req, res, next) => {
         res.send({
           success: true,
           data: {
+            id: user.id,
             full_name: user.full_name,
             email: user.email,
           },

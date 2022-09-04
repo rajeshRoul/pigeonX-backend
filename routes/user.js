@@ -3,7 +3,11 @@ const passport = require("passport");
 const UserController = require("../controllers/user_controller");
 const router = express.Router();
 
-router.get("/profile", passport.checkAuthentication, UserController.profile);
+router.get(
+  "/profile/:id",
+  passport.checkAuthentication,
+  UserController.profile
+);
 
 router.post("/create", UserController.create);
 
