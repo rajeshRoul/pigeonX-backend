@@ -99,3 +99,26 @@ module.exports.getAllUsers = (req, res) => {
     }
   );
 };
+
+module.exports.updateProfile = (req, res) => {
+  if (`${req.user._id}` === req.params.id) {
+    User.findOneAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true },
+      (err, user) => {
+        if (err) {
+          return res
+            .status(500)
+            .send({ success: false, msg: "Failed to update User" });
+        }
+        return res.send({ success: true, data: user });
+      }
+    );
+  } else {
+    return res.status(401).send({
+      success: false,
+      msg: "Unauthorized to perform this action",
+    });
+  }
+};

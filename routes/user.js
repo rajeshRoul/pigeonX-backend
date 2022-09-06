@@ -17,4 +17,10 @@ router.post("/logout", UserController.logout);
 
 router.get("/getAll", passport.checkAuthentication, UserController.getAllUsers);
 
+router.patch(
+  "/profile/:id",
+  passport.checkAuthentication,
+  UserController.updateProfile
+);
+
 module.exports = router;
